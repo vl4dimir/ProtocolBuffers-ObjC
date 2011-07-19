@@ -1,0 +1,1 @@
+You can find the original project [here](http://code.google.com/p/metasyntactic/wiki/ProtocolBuffers). Its author hasn't responded to my bug reports, so I made this fork to fix them myself.
