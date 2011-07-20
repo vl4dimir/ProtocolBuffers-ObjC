@@ -132,19 +132,19 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
   void EnumFieldGenerator::GenerateBuilderMembersSource(io::Printer* printer) const {
     printer->Print(variables_,
       "- (BOOL) has$capitalized_name$ {\n"
-      "  return result.has$capitalized_name$;\n"
+      "  return protobufBuilderResult.has$capitalized_name$;\n"
       "}\n"
       "- ($type$) $name$ {\n"
-      "  return result.$name$;\n"
+      "  return protobufBuilderResult.$name$;\n"
       "}\n"
       "- ($classname$_Builder*) set$capitalized_name$:($type$) value {\n"
-      "  result.has$capitalized_name$ = YES;\n"
-      "  result.$name$ = value;\n"
+      "  protobufBuilderResult.has$capitalized_name$ = YES;\n"
+      "  protobufBuilderResult.$name$ = value;\n"
       "  return self;\n"
       "}\n"
       "- ($classname$_Builder*) clear$capitalized_name$ {\n"
-      "  result.has$capitalized_name$ = NO;\n"
-      "  result.$name$ = $default$;\n"
+      "  protobufBuilderResult.has$capitalized_name$ = NO;\n"
+      "  protobufBuilderResult.$name$ = $default$;\n"
       "  return self;\n"
       "}\n");
   }
@@ -315,31 +315,31 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
   void RepeatedEnumFieldGenerator::GenerateBuilderMembersSource(io::Printer* printer) const {
     printer->Print(variables_,
       "- (NSArray*) $list_name$ {\n"
-      "  return result.$mutable_list_name$;\n"
+      "  return protobufBuilderResult.$mutable_list_name$;\n"
       "}\n"
       "- ($type$) $name$AtIndex:(int32_t) index {\n"
-      "  return [result $name$AtIndex:index];\n"
+      "  return [protobufBuilderResult $name$AtIndex:index];\n"
       "}\n"
       "- ($classname$_Builder*) replace$capitalized_name$AtIndex:(int32_t) index with:($type$) value {\n"
-      "  [result.$mutable_list_name$ replaceObjectAtIndex:index withObject:[NSNumber numberWithInt:value]];\n"
+      "  [protobufBuilderResult.$mutable_list_name$ replaceObjectAtIndex:index withObject:[NSNumber numberWithInt:value]];\n"
       "  return self;\n"
       "}\n"
       "- ($classname$_Builder*) add$capitalized_name$:($type$) value {\n"
-      "  if (result.$mutable_list_name$ == nil) {\n"
-      "    result.$mutable_list_name$ = [NSMutableArray array];\n"
+      "  if (protobufBuilderResult.$mutable_list_name$ == nil) {\n"
+      "    protobufBuilderResult.$mutable_list_name$ = [NSMutableArray array];\n"
       "  }\n"
-      "  [result.$mutable_list_name$ addObject:[NSNumber numberWithInt:value]];\n"
+      "  [protobufBuilderResult.$mutable_list_name$ addObject:[NSNumber numberWithInt:value]];\n"
       "  return self;\n"
       "}\n"
       "- ($classname$_Builder*) addAll$capitalized_name$:(NSArray*) values {\n"
-      "  if (result.$mutable_list_name$ == nil) {\n"
-      "    result.$mutable_list_name$ = [NSMutableArray array];\n"
+      "  if (protobufBuilderResult.$mutable_list_name$ == nil) {\n"
+      "    protobufBuilderResult.$mutable_list_name$ = [NSMutableArray array];\n"
       "  }\n"
-      "  [result.$mutable_list_name$ addObjectsFromArray:values];\n"
+      "  [protobufBuilderResult.$mutable_list_name$ addObjectsFromArray:values];\n"
       "  return self;\n"
       "}\n"
       "- ($classname$_Builder*) clear$capitalized_name$List {\n"
-      "  result.$mutable_list_name$ = nil;\n"
+      "  protobufBuilderResult.$mutable_list_name$ = nil;\n"
       "  return self;\n"
       "}\n");
   }
@@ -347,10 +347,10 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
   void RepeatedEnumFieldGenerator::GenerateMergingCodeSource(io::Printer* printer) const {
     printer->Print(variables_,
       "if (other.$mutable_list_name$.count > 0) {\n"
-      "  if (result.$mutable_list_name$ == nil) {\n"
-      "    result.$mutable_list_name$ = [NSMutableArray array];\n"
+      "  if (protobufBuilderResult.$mutable_list_name$ == nil) {\n"
+      "    protobufBuilderResult.$mutable_list_name$ = [NSMutableArray array];\n"
       "  }\n"
-      "  [result.$mutable_list_name$ addObjectsFromArray:other.$mutable_list_name$];\n"
+      "  [protobufBuilderResult.$mutable_list_name$ addObjectsFromArray:other.$mutable_list_name$];\n"
       "}\n");
   }
 
