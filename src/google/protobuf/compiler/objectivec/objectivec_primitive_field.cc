@@ -131,24 +131,24 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
         (*variables)["boxed_type"] = BoxedPrimitiveTypeName(GetObjectiveCType(descriptor));
         (*variables)["default"] = DefaultValue(descriptor);
         (*variables)["capitalized_type"] = GetCapitalizedType(descriptor);
-        (*variables)["boxed_value"] = BoxValue(descriptor, "value");
+        (*variables)["boxed_value"] = BoxValue(descriptor, "_value");
 
-        string unboxed_value = "value";
+        string unboxed_value = "_value";
         switch (GetObjectiveCType(descriptor)) {
           case OBJECTIVECTYPE_INT:
-            unboxed_value = "[value intValue]";
+            unboxed_value = "[_value intValue]";
             break;
           case OBJECTIVECTYPE_LONG:
-            unboxed_value = "[value longLongValue]";
+            unboxed_value = "[_value longLongValue]";
             break;
           case OBJECTIVECTYPE_FLOAT:
-            unboxed_value = "[value floatValue]";
+            unboxed_value = "[_value floatValue]";
             break;
           case OBJECTIVECTYPE_DOUBLE:
-            unboxed_value = "[value doubleValue]";
+            unboxed_value = "[_value doubleValue]";
             break;
           case OBJECTIVECTYPE_BOOLEAN:
-            unboxed_value = "[value boolValue]";
+            unboxed_value = "[_value boolValue]";
             break;
         } 
 
@@ -224,8 +224,8 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
       "- (BOOL) has$capitalized_name$ {\n"
       "  return !!has$capitalized_name$_;\n"
       "}\n"
-      "- (void) setHas$capitalized_name$:(BOOL) value {\n"
-      "  has$capitalized_name$_ = !!value;\n"
+      "- (void) setHas$capitalized_name$:(BOOL) _value {\n"
+      "  has$capitalized_name$_ = !!_value;\n"
       "}\n");
 
     if (GetObjectiveCType(descriptor_) == OBJECTIVECTYPE_BOOLEAN) {
@@ -233,8 +233,8 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
         "- (BOOL) $name$ {\n"
         "  return !!$name$_;\n"
         "}\n"
-        "- (void) set$capitalized_name$:(BOOL) value {\n"
-        "  $name$_ = !!value;\n"
+        "- (void) set$capitalized_name$:(BOOL) _value {\n"
+        "  $name$_ = !!_value;\n"
         "}\n");
     } else {
       printer->Print(variables_, "@synthesize $name$;\n");
@@ -268,7 +268,7 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
     printer->Print(variables_,
       "- (BOOL) has$capitalized_name$;\n"
       "- ($storage_type$) $name$;\n"
-      "- ($classname$_Builder*) set$capitalized_name$:($storage_type$) value;\n"
+      "- ($classname$_Builder*) set$capitalized_name$:($storage_type$) _value;\n"
       "- ($classname$_Builder*) clear$capitalized_name$;\n");
   }
 
@@ -301,9 +301,9 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
       "- ($storage_type$) $name$ {\n"
       "  return protobufBuilderResult.$name$;\n"
       "}\n"
-      "- ($classname$_Builder*) set$capitalized_name$:($storage_type$) value {\n"
+      "- ($classname$_Builder*) set$capitalized_name$:($storage_type$) _value {\n"
       "  protobufBuilderResult.has$capitalized_name$ = YES;\n"
-      "  protobufBuilderResult.$name$ = value;\n"
+      "  protobufBuilderResult.$name$ = _value;\n"
       "  return self;\n"
       "}\n"
       "- ($classname$_Builder*) clear$capitalized_name$ {\n"
@@ -409,8 +409,8 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
     printer->Print(variables_,
       "- (NSArray*) $list_name$;\n"
       "- ($storage_type$) $name$AtIndex:(int32_t) index;\n"
-      "- ($classname$_Builder*) replace$capitalized_name$AtIndex:(int32_t) index with:($storage_type$) value;\n"
-      "- ($classname$_Builder*) add$capitalized_name$:($storage_type$) value;\n"
+      "- ($classname$_Builder*) replace$capitalized_name$AtIndex:(int32_t) index with:($storage_type$) _value;\n"
+      "- ($classname$_Builder*) add$capitalized_name$:($storage_type$) _value;\n"
       "- ($classname$_Builder*) addAll$capitalized_name$:(NSArray*) values;\n"
       "- ($classname$_Builder*) clear$capitalized_name$List;\n");
   }
@@ -442,7 +442,7 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
       "  return $mutable_list_name$;\n"
       "}\n"
       "- ($storage_type$) $name$AtIndex:(int32_t) index {\n"
-      "  id value = [$mutable_list_name$ objectAtIndex:index];\n"
+      "  id _value = [$mutable_list_name$ objectAtIndex:index];\n"
       "  return $unboxed_value$;\n"
       "}\n");
   }
@@ -458,11 +458,11 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
       "- ($storage_type$) $name$AtIndex:(int32_t) index {\n"
       "  return [protobufBuilderResult $name$AtIndex:index];\n"
       "}\n"
-      "- ($classname$_Builder*) replace$capitalized_name$AtIndex:(int32_t) index with:($storage_type$) value {\n"
+      "- ($classname$_Builder*) replace$capitalized_name$AtIndex:(int32_t) index with:($storage_type$) _value {\n"
       "  [protobufBuilderResult.$mutable_list_name$ replaceObjectAtIndex:index withObject:$boxed_value$];\n"
       "  return self;\n"
       "}\n"
-      "- ($classname$_Builder*) add$capitalized_name$:($storage_type$) value {\n"
+      "- ($classname$_Builder*) add$capitalized_name$:($storage_type$) _value {\n"
       "  if (protobufBuilderResult.$mutable_list_name$ == nil) {\n"
       "    protobufBuilderResult.$mutable_list_name$ = [NSMutableArray array];\n"
       "  }\n"
@@ -523,7 +523,7 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
 
       if (ReturnsPrimitiveType(descriptor_)) {
         printer->Print(variables_,
-          "for (NSNumber* value in self.$mutable_list_name$) {\n"
+          "for (NSNumber* _value in self.$mutable_list_name$) {\n"
           "  [output write$capitalized_type$NoTag:$unboxed_value$];\n"
           "}\n");
       } else {
@@ -535,7 +535,7 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
     } else {
       if (ReturnsPrimitiveType(descriptor_)) {
         printer->Print(variables_,
-          "for (NSNumber* value in self.$mutable_list_name$) {\n"
+          "for (NSNumber* _value in self.$mutable_list_name$) {\n"
           "  [output write$capitalized_type$:$number$ value:$unboxed_value$];\n"
           "}\n");
       } else {
@@ -555,7 +555,7 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
     if (FixedSize(descriptor_->type()) == -1) {
       if (ReturnsPrimitiveType(descriptor_)) {
         printer->Print(variables_,
-          "for (NSNumber* value in self.$mutable_list_name$) {\n"
+          "for (NSNumber* _value in self.$mutable_list_name$) {\n"
           "  dataSize += compute$capitalized_type$SizeNoTag($unboxed_value$);\n"
           "}\n");
       } else {

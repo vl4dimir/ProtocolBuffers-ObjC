@@ -68,7 +68,7 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
     printer->Print(
       "} $classname$;\n"
       "\n"
-      "BOOL $classname$IsValidValue($classname$ value);\n"
+      "BOOL $classname$IsValidValue($classname$ _value);\n"
       "\n",
       "classname", ClassName(descriptor_));
   }
@@ -76,8 +76,8 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
 
   void EnumGenerator::GenerateSource(io::Printer* printer) {
     printer->Print(
-      "BOOL $classname$IsValidValue($classname$ value) {\n"
-      "  switch (value) {\n",
+      "BOOL $classname$IsValidValue($classname$ _value) {\n"
+      "  switch (_value) {\n",
       "classname", ClassName(descriptor_));
 
     for (int i = 0; i < canonical_values_.size(); i++) {

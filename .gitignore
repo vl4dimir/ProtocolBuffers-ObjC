@@ -3,3 +3,13 @@
 *.mode1v3
 *.DS_Store
 */xcuserdata/*
+*.Plo
+autom4te.cache/
+gtest/scripts/gtest-config
+src/.libs/
+src/.deps/
+*.o
+*.lo
+*.la
+src/protoc
+config.log

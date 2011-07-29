@@ -33,9 +33,9 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-build_triplet = i386-apple-darwin10.0.0
-host_triplet = i386-apple-darwin10.0.0
-target_triplet = i386-apple-darwin10.0.0
+build_triplet = i386-apple-darwin10.8.0
+host_triplet = i386-apple-darwin10.8.0
+target_triplet = i386-apple-darwin10.8.0
 bin_PROGRAMS = protoc$(EXEEXT)
 check_PROGRAMS = protobuf-test$(EXEEXT) \
 	protobuf-lazy-descriptor-test$(EXEEXT) \
@@ -296,12 +296,12 @@ CTAGS = ctags
 am__EXEEXT_2 =  \
 	google/protobuf/io/gzip_stream_unittest.sh
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-ACLOCAL = ${SHELL} /Projects/metasyntactic/trunk/protobuf-2.2.0/missing --run aclocal-1.10
-AMTAR = ${SHELL} /Projects/metasyntactic/trunk/protobuf-2.2.0/missing --run tar
+ACLOCAL = ${SHELL} /Users/kalamunya/Projects/Basement/ProtocolBuffers-ObjC/missing --run aclocal-1.10
+AMTAR = ${SHELL} /Users/kalamunya/Projects/Basement/ProtocolBuffers-ObjC/missing --run tar
 AR = ar
-AUTOCONF = ${SHELL} /Projects/metasyntactic/trunk/protobuf-2.2.0/missing --run autoconf
-AUTOHEADER = ${SHELL} /Projects/metasyntactic/trunk/protobuf-2.2.0/missing --run autoheader
-AUTOMAKE = ${SHELL} /Projects/metasyntactic/trunk/protobuf-2.2.0/missing --run automake-1.10
+AUTOCONF = ${SHELL} /Users/kalamunya/Projects/Basement/ProtocolBuffers-ObjC/missing --run autoconf
+AUTOHEADER = ${SHELL} /Users/kalamunya/Projects/Basement/ProtocolBuffers-ObjC/missing --run autoheader
+AUTOMAKE = ${SHELL} /Users/kalamunya/Projects/Basement/ProtocolBuffers-ObjC/missing --run automake-1.10
 AWK = awk
 CC = gcc
 CCDEPMODE = depmode=gcc3
@@ -329,7 +329,7 @@ INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 ISAINFO = 
-LD = /usr/libexec/gcc/i686-apple-darwin10/4.2.1/ld
+LD = /usr/llvm-gcc-4.2/libexec/gcc/i686-apple-darwin10/4.2.1/ld
 LDFLAGS = 
 LIBOBJS = 
 LIBS = -lz 
@@ -337,7 +337,7 @@ LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = lipo
 LN_S = ln -s
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /Projects/metasyntactic/trunk/protobuf-2.2.0/missing --run makeinfo
+MAKEINFO = ${SHELL} /Users/kalamunya/Projects/Basement/ProtocolBuffers-ObjC/missing --run makeinfo
 MKDIR_P = .././install-sh -c -d
 NM = /usr/bin/nm
 NMEDIT = nmedit
@@ -363,10 +363,10 @@ SET_MAKE =
 SHELL = /bin/sh
 STRIP = strip
 VERSION = 2.2.0
-abs_builddir = /Projects/metasyntactic/trunk/protobuf-2.2.0/src
-abs_srcdir = /Projects/metasyntactic/trunk/protobuf-2.2.0/src
-abs_top_builddir = /Projects/metasyntactic/trunk/protobuf-2.2.0
-abs_top_srcdir = /Projects/metasyntactic/trunk/protobuf-2.2.0
+abs_builddir = /Users/kalamunya/Projects/Basement/ProtocolBuffers-ObjC/src
+abs_srcdir = /Users/kalamunya/Projects/Basement/ProtocolBuffers-ObjC/src
+abs_top_builddir = /Users/kalamunya/Projects/Basement/ProtocolBuffers-ObjC
+abs_top_srcdir = /Users/kalamunya/Projects/Basement/ProtocolBuffers-ObjC
 ac_ct_CC = gcc
 ac_ct_CXX = g++
 ac_ct_DUMPBIN = 
@@ -377,10 +377,10 @@ am__quote =
 am__tar = ${AMTAR} chof - "$$tardir"
 am__untar = ${AMTAR} xf -
 bindir = ${exec_prefix}/bin
-build = i386-apple-darwin10.0.0
+build = i386-apple-darwin10.8.0
 build_alias = 
 build_cpu = i386
-build_os = darwin10.0.0
+build_os = darwin10.8.0
 build_vendor = apple
 builddir = .
 datadir = ${datarootdir}
@@ -388,15 +388,15 @@ datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host = i386-apple-darwin10.0.0
+host = i386-apple-darwin10.8.0
 host_alias = 
 host_cpu = i386
-host_os = darwin10.0.0
+host_os = darwin10.8.0
 host_vendor = apple
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = $(SHELL) /Projects/metasyntactic/trunk/protobuf-2.2.0/install-sh
+install_sh = $(SHELL) /Users/kalamunya/Projects/Basement/ProtocolBuffers-ObjC/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -414,10 +414,10 @@ sharedstatedir = ${prefix}/com
 srcdir = .
 subdirs =  gtest
 sysconfdir = ${prefix}/etc
-target = i386-apple-darwin10.0.0
+target = i386-apple-darwin10.8.0
 target_alias = 
 target_cpu = i386
-target_os = darwin10.0.0
+target_os = darwin10.8.0
 target_vendor = apple
 top_builddir = ..
 top_srcdir = ..
@@ -750,9 +750,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  src/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  src/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  src/Makefile
+	  $(AUTOMAKE) --foreign  src/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \

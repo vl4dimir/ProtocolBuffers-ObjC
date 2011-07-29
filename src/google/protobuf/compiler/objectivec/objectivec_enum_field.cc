@@ -46,8 +46,8 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
         (*variables)["number"] = SimpleItoa(descriptor->number());
         (*variables)["type"] = type;
         (*variables)["default"] = EnumValueName(default_value);
-        (*variables)["boxed_value"] = "[NSNumber numberWithInt:value]";
-        (*variables)["unboxed_value"] = "[value intValue]";
+        (*variables)["boxed_value"] = "[NSNumber numberWithInt:_value]";
+        (*variables)["unboxed_value"] = "[_value intValue]";
         (*variables)["tag"] = SimpleItoa(internal::WireFormat::MakeTag(descriptor));
         (*variables)["tag_size"] = SimpleItoa(
           internal::WireFormat::TagSize(descriptor->number(), descriptor->type()));
@@ -104,8 +104,8 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
       "- (BOOL) has$capitalized_name$ {\n"
       "  return !!has$capitalized_name$_;\n"
       "}\n"
-      "- (void) setHas$capitalized_name$:(BOOL) value {\n"
-      "  has$capitalized_name$_ = !!value;\n"
+      "- (void) setHas$capitalized_name$:(BOOL) _value {\n"
+      "  has$capitalized_name$_ = !!_value;\n"
       "}\n"
       "@synthesize $name$;\n");
   }
@@ -124,7 +124,7 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
     printer->Print(variables_,
       "- (BOOL) has$capitalized_name$;\n"
       "- ($type$) $name$;\n"\
-      "- ($classname$_Builder*) set$capitalized_name$:($type$) value;\n"
+      "- ($classname$_Builder*) set$capitalized_name$:($type$) _value;\n"
       "- ($classname$_Builder*) clear$capitalized_name$;\n");
   }
 
@@ -137,9 +137,9 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
       "- ($type$) $name$ {\n"
       "  return protobufBuilderResult.$name$;\n"
       "}\n"
-      "- ($classname$_Builder*) set$capitalized_name$:($type$) value {\n"
+      "- ($classname$_Builder*) set$capitalized_name$:($type$) _value {\n"
       "  protobufBuilderResult.has$capitalized_name$ = YES;\n"
-      "  protobufBuilderResult.$name$ = value;\n"
+      "  protobufBuilderResult.$name$ = _value;\n"
       "  return self;\n"
       "}\n"
       "- ($classname$_Builder*) clear$capitalized_name$ {\n"
@@ -175,11 +175,11 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
 
   void EnumFieldGenerator::GenerateParsingCodeSource(io::Printer* printer) const {
     printer->Print(variables_,
-      "int32_t value = [input readEnum];\n"
-      "if ($type$IsValidValue(value)) {\n"
-      "  [self set$capitalized_name$:value];\n"
+      "int32_t _value = [input readEnum];\n"
+      "if ($type$IsValidValue(_value)) {\n"
+      "  [self set$capitalized_name$:_value];\n"
       "} else {\n"
-      "  [unknownFields mergeVarintField:$number$ value:value];\n"
+      "  [unknownFields mergeVarintField:$number$ value:_value];\n"
       "}\n");
   }
 
@@ -274,8 +274,8 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
     printer->Print(variables_,
       "- (NSArray*) $list_name$;\n"
       "- ($type$) $name$AtIndex:(int32_t) index;\n"
-      "- ($classname$_Builder*) replace$capitalized_name$AtIndex:(int32_t) index with:($type$) value;\n"
-      "- ($classname$_Builder*) add$capitalized_name$:($type$) value;\n"
+      "- ($classname$_Builder*) replace$capitalized_name$AtIndex:(int32_t) index with:($type$) _value;\n"
+      "- ($classname$_Builder*) add$capitalized_name$:($type$) _value;\n"
       "- ($classname$_Builder*) addAll$capitalized_name$:(NSArray*) values;\n"
       "- ($classname$_Builder*) clear$capitalized_name$List;\n");
   }
@@ -307,8 +307,8 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
       "  return $mutable_list_name$;\n"
       "}\n"
       "- ($type$) $name$AtIndex:(int32_t) index {\n"
-      "  NSNumber* value = [$mutable_list_name$ objectAtIndex:index];\n"
-      "  return [value intValue];\n"
+      "  NSNumber* _value = [$mutable_list_name$ objectAtIndex:index];\n"
+      "  return [_value intValue];\n"
       "}\n");
   }
 
@@ -320,15 +320,15 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
       "- ($type$) $name$AtIndex:(int32_t) index {\n"
       "  return [protobufBuilderResult $name$AtIndex:index];\n"
       "}\n"
-      "- ($classname$_Builder*) replace$capitalized_name$AtIndex:(int32_t) index with:($type$) value {\n"
-      "  [protobufBuilderResult.$mutable_list_name$ replaceObjectAtIndex:index withObject:[NSNumber numberWithInt:value]];\n"
+      "- ($classname$_Builder*) replace$capitalized_name$AtIndex:(int32_t) index with:($type$) _value {\n"
+      "  [protobufBuilderResult.$mutable_list_name$ replaceObjectAtIndex:index withObject:[NSNumber numberWithInt:_value]];\n"
       "  return self;\n"
       "}\n"
-      "- ($classname$_Builder*) add$capitalized_name$:($type$) value {\n"
+      "- ($classname$_Builder*) add$capitalized_name$:($type$) _value {\n"
       "  if (protobufBuilderResult.$mutable_list_name$ == nil) {\n"
       "    protobufBuilderResult.$mutable_list_name$ = [NSMutableArray array];\n"
       "  }\n"
-      "  [protobufBuilderResult.$mutable_list_name$ addObject:[NSNumber numberWithInt:value]];\n"
+      "  [protobufBuilderResult.$mutable_list_name$ addObject:[NSNumber numberWithInt:_value]];\n"
       "  return self;\n"
       "}\n"
       "- ($classname$_Builder*) addAll$capitalized_name$:(NSArray*) values {\n"
@@ -368,11 +368,11 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
     }
 
     printer->Print(variables_,
-      "int32_t value = [input readEnum];\n"
-      "if ($type$IsValidValue(value)) {\n"
-      "  [self add$capitalized_name$:value];\n"
+      "int32_t _value = [input readEnum];\n"
+      "if ($type$IsValidValue(_value)) {\n"
+      "  [self add$capitalized_name$:_value];\n"
       "} else {\n"
-      "  [unknownFields mergeVarintField:$number$ value:value];\n"
+      "  [unknownFields mergeVarintField:$number$ value:_value];\n"
       "}\n");
 
     if (descriptor_->options().packed()) {
