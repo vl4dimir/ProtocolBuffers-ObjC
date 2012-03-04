@@ -13,3 +13,6 @@ src/.deps/
 *.la
 src/protoc
 config.log
+Makefile
+config.status
+libtool
