@@ -100,7 +100,7 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
 
 
   void MessageFieldGenerator::GeneratePropertyHeader(io::Printer* printer) const {
-    printer->Print(variables_, "@property (readonly, retain) $storage_type$ $name$;\n");
+    printer->Print(variables_, "@property (readwrite, retain) $storage_type$ $name$;\n");
   }
 
 
@@ -115,14 +115,20 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
 
 
   void MessageFieldGenerator::GenerateSynthesizeSource(io::Printer* printer) const {
-    printer->Print(variables_,
-      "- (BOOL) has$capitalized_name$ {\n"
-      "  return !!has$capitalized_name$_;\n"
-      "}\n"
-      "- (void) setHas$capitalized_name$:(BOOL) _value {\n"
-      "  has$capitalized_name$_ = !!_value;\n"
-      "}\n"
-      "@synthesize $name$;\n");
+	printer->Print(variables_,
+		"- (BOOL) has$capitalized_name$ {\n"
+		"  return !!has$capitalized_name$_;\n"
+		"}\n"
+		"- (void) setHas$capitalized_name$:(BOOL) _value {\n"
+		"  has$capitalized_name$_ = !!_value;\n"
+		"}\n"
+		"@synthesize $name$;\n"
+		"- (void) set$capitalized_name$:($storage_type$) _value {\n"
+		"  if ($name$ == _value) return;\n"
+		"  [$name$ autorelease];\n"
+		"  $name$ = [_value retain];\n"
+		"  self.has$capitalized_name$ = true;\n"
+		"}\n");
   }
 
 

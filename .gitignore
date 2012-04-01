@@ -2,7 +2,8 @@
 *.perspectivev3
 *.mode1v3
 *.DS_Store
-*/xcuserdata/*
+xcuserdata/
+project.xcworkspace
 *.Plo
 autom4te.cache/
 gtest/scripts/gtest-config

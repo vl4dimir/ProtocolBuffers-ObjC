@@ -197,13 +197,13 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
   void PrimitiveFieldGenerator::GeneratePropertyHeader(io::Printer* printer) const {
     if (IsReferenceType(GetObjectiveCType(descriptor_))) {
       printer->Print(variables_,
-        "@property (readonly, retain) $storage_type$ $name$;\n");
+        "@property (readwrite, retain) $storage_type$ $name$;\n");
     } else if (GetObjectiveCType(descriptor_) == OBJECTIVECTYPE_BOOLEAN) {
       printer->Print(variables_,
-        "- (BOOL) $name$;\n");
+        "@property (readwrite, assign) BOOL $name$;\n");
     } else {
       printer->Print(variables_,
-        "@property (readonly) $storage_type$ $name$;\n");
+        "@property (readwrite) $storage_type$ $name$;\n");
     }
   }
 
@@ -235,9 +235,28 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
         "}\n"
         "- (void) set$capitalized_name$:(BOOL) _value {\n"
         "  $name$_ = !!_value;\n"
+    	"  self.has$capitalized_name$ = true;\n"
         "}\n");
-    } else {
-      printer->Print(variables_, "@synthesize $name$;\n");
+    }
+    else if (IsReferenceType(GetObjectiveCType(descriptor_))) {
+    	// This is a reference type, generate a "retain" setter
+    	printer->Print(variables_,
+    	        "@synthesize $name$;\n"
+    	        "- (void) set$capitalized_name$:($storage_type$) _value {\n"
+    			"  if ($name$ == _value) return;\n"
+    			"  [$name$ autorelease];\n"
+    	        "  $name$ = [_value retain];\n"
+    			"  self.has$capitalized_name$ = true;\n"
+    	        "}\n");
+    }
+    else {
+    	// This is a primitive value, generate an "assign" setter
+		printer->Print(variables_,
+				"@synthesize $name$;\n"
+				"- (void) set$capitalized_name$:($storage_type$)_value {\n"
+				"  $name$ = _value;\n"
+				"  self.has$capitalized_name$ = true;\n"
+				"}\n");
     }
   }
 
