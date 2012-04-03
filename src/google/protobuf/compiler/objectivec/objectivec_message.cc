@@ -651,7 +651,7 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
   void MessageGenerator::GenerateBuilderSource(io::Printer* printer) {
     printer->Print(
       "@interface $classname$_Builder()\n"
-      "@property (retain) $classname$* protobufBuilderResult;\n"
+      "@property (nonatomic, retain) $classname$* protobufBuilderResult;\n"
       "@end\n"
       "\n"
       "@implementation $classname$_Builder\n"
@@ -867,7 +867,7 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
               break;
             case FieldDescriptor::LABEL_REPEATED:
               printer->Print(vars,
-                "for ($type$* element in self.$name$List) {\n"
+                "for ($type$* element in self.$name$) {\n"
                 "  if (!element.isInitialized) {\n"
                 "    return NO;\n"
                 "  }\n"

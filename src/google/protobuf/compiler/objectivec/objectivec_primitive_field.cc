@@ -117,8 +117,6 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
         (*variables)["classname"] = ClassName(descriptor->containing_type());
         (*variables)["name"] = UnderscoresToCamelCase(descriptor);
         (*variables)["capitalized_name"] = UnderscoresToCapitalizedCamelCase(descriptor);
-        (*variables)["list_name"] = UnderscoresToCamelCase(descriptor) + "List";
-        (*variables)["mutable_list_name"] = "mutable" + UnderscoresToCapitalizedCamelCase(descriptor) + "List";
         (*variables)["number"] = SimpleItoa(descriptor->number());
         (*variables)["type"] = PrimitiveTypeName(GetObjectiveCType(descriptor));
 
@@ -197,25 +195,18 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
   void PrimitiveFieldGenerator::GeneratePropertyHeader(io::Printer* printer) const {
     if (IsReferenceType(GetObjectiveCType(descriptor_))) {
       printer->Print(variables_,
-        "@property (readwrite, retain) $storage_type$ $name$;\n");
+        "@property (nonatomic, retain) $storage_type$ $name$;\n");
     } else if (GetObjectiveCType(descriptor_) == OBJECTIVECTYPE_BOOLEAN) {
       printer->Print(variables_,
-        "@property (readwrite, assign) BOOL $name$;\n");
+        "@property (nonatomic, assign) BOOL $name$;\n");
     } else {
       printer->Print(variables_,
-        "@property (readwrite) $storage_type$ $name$;\n");
+        "@property (nonatomic, assign) $storage_type$ $name$;\n");
     }
   }
 
 
   void PrimitiveFieldGenerator::GenerateExtensionSource(io::Printer* printer) const {
-    if (IsReferenceType(GetObjectiveCType(descriptor_))) {
-      printer->Print(variables_,
-        "@property (retain) $storage_type$ $name$;\n");
-    } else {
-      printer->Print(variables_,
-        "@property $storage_type$ $name$;\n");
-    }
   }
 
 
@@ -382,7 +373,7 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
 
 
   void RepeatedPrimitiveFieldGenerator::GenerateFieldHeader(io::Printer* printer) const {
-    printer->Print(variables_, "NSMutableArray* $mutable_list_name$;\n");
+    printer->Print(variables_, "NSMutableArray* $name$;\n");
     if (descriptor_->options().packed()) {
       printer->Print(variables_,
         "int32_t $name$MemoizedSerializedSize;\n");
@@ -399,18 +390,16 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
 
 
   void RepeatedPrimitiveFieldGenerator::GenerateExtensionSource(io::Printer* printer) const {
-    printer->Print(variables_,
-      "@property (retain) NSMutableArray* $mutable_list_name$;\n");
   }
 
 
   void RepeatedPrimitiveFieldGenerator::GenerateSynthesizeSource(io::Printer* printer) const {
-    printer->Print(variables_, "@synthesize $mutable_list_name$;\n");
+    printer->Print(variables_, "@synthesize $name$;\n");
   }
 
 
   void RepeatedPrimitiveFieldGenerator::GenerateDeallocSource(io::Printer* printer) const {
-    printer->Print(variables_, "self.$mutable_list_name$ = nil;\n");
+    printer->Print(variables_, "self.$name$ = nil;\n");
   }
 
 
@@ -419,14 +408,13 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
 
 
   void RepeatedPrimitiveFieldGenerator::GenerateMembersHeader(io::Printer* printer) const {
-    printer->Print(variables_,
-      "- (NSArray*) $list_name$;\n"
-      "- ($storage_type$) $name$AtIndex:(int32_t) index;\n");
+	  printer->Print(variables_,
+	  			  "@property (nonatomic, retain) NSMutableArray* $name$;\n");
   }
 
   void RepeatedPrimitiveFieldGenerator::GenerateBuilderMembersHeader(io::Printer* printer) const {
     printer->Print(variables_,
-      "- (NSArray*) $list_name$;\n"
+      "- (NSArray*) $name$;\n"
       "- ($storage_type$) $name$AtIndex:(int32_t) index;\n"
       "- ($classname$_Builder*) replace$capitalized_name$AtIndex:(int32_t) index with:($storage_type$) _value;\n"
       "- ($classname$_Builder*) add$capitalized_name$:($storage_type$) _value;\n"
@@ -457,57 +445,57 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
 
   void RepeatedPrimitiveFieldGenerator::GenerateMembersSource(io::Printer* printer) const {
     printer->Print(variables_,
-      "- (NSArray*) $list_name$ {\n"
-      "  return $mutable_list_name$;\n"
+      "- (NSArray*) $name$ {\n"
+      "  return $name$;\n"
       "}\n"
       "- ($storage_type$) $name$AtIndex:(int32_t) index {\n"
-      "  id _value = [$mutable_list_name$ objectAtIndex:index];\n"
+      "  id _value = [$name$ objectAtIndex:index];\n"
       "  return $unboxed_value$;\n"
       "}\n");
   }
 
   void RepeatedPrimitiveFieldGenerator::GenerateBuilderMembersSource(io::Printer* printer) const {
     printer->Print(variables_,
-      "- (NSArray*) $list_name$ {\n"
-      "  if (protobufBuilderResult.$mutable_list_name$ == nil) {\n"
+      "- (NSArray*) $name$ {\n"
+      "  if (protobufBuilderResult.$name$ == nil) {\n"
       "    return [NSArray array];\n"
       "  }\n"
-      "  return protobufBuilderResult.$mutable_list_name$;\n"
+      "  return protobufBuilderResult.$name$;\n"
       "}\n"
       "- ($storage_type$) $name$AtIndex:(int32_t) index {\n"
       "  return [protobufBuilderResult $name$AtIndex:index];\n"
       "}\n"
       "- ($classname$_Builder*) replace$capitalized_name$AtIndex:(int32_t) index with:($storage_type$) _value {\n"
-      "  [protobufBuilderResult.$mutable_list_name$ replaceObjectAtIndex:index withObject:$boxed_value$];\n"
+      "  [protobufBuilderResult.$name$ replaceObjectAtIndex:index withObject:$boxed_value$];\n"
       "  return self;\n"
       "}\n"
       "- ($classname$_Builder*) add$capitalized_name$:($storage_type$) _value {\n"
-      "  if (protobufBuilderResult.$mutable_list_name$ == nil) {\n"
-      "    protobufBuilderResult.$mutable_list_name$ = [NSMutableArray array];\n"
+      "  if (protobufBuilderResult.$name$ == nil) {\n"
+      "    protobufBuilderResult.$name$ = [NSMutableArray array];\n"
       "  }\n"
-      "  [protobufBuilderResult.$mutable_list_name$ addObject:$boxed_value$];\n"
+      "  [protobufBuilderResult.$name$ addObject:$boxed_value$];\n"
       "  return self;\n"
       "}\n"
       "- ($classname$_Builder*) addAll$capitalized_name$:(NSArray*) values {\n"
-      "  if (protobufBuilderResult.$mutable_list_name$ == nil) {\n"
-      "    protobufBuilderResult.$mutable_list_name$ = [NSMutableArray array];\n"
+      "  if (protobufBuilderResult.$name$ == nil) {\n"
+      "    protobufBuilderResult.$name$ = [NSMutableArray array];\n"
       "  }\n"
-      "  [protobufBuilderResult.$mutable_list_name$ addObjectsFromArray:values];\n"
+      "  [protobufBuilderResult.$name$ addObjectsFromArray:values];\n"
       "  return self;\n"
       "}\n"
       "- ($classname$_Builder*) clear$capitalized_name$List {\n"
-      "  protobufBuilderResult.$mutable_list_name$ = nil;\n"
+      "  protobufBuilderResult.$name$ = nil;\n"
       "  return self;\n"
       "}\n");
   }
 
   void RepeatedPrimitiveFieldGenerator::GenerateMergingCodeSource(io::Printer* printer) const {
     printer->Print(variables_,
-      "if (other.$mutable_list_name$.count > 0) {\n"
-      "  if (protobufBuilderResult.$mutable_list_name$ == nil) {\n"
-      "    protobufBuilderResult.$mutable_list_name$ = [NSMutableArray array];\n"
+      "if (other.$name$.count > 0) {\n"
+      "  if (protobufBuilderResult.$name$ == nil) {\n"
+      "    protobufBuilderResult.$name$ = [NSMutableArray array];\n"
       "  }\n"
-      "  [protobufBuilderResult.$mutable_list_name$ addObjectsFromArray:other.$mutable_list_name$];\n"
+      "  [protobufBuilderResult.$name$ addObjectsFromArray:other.$name$];\n"
       "}\n");
   }
 
@@ -535,31 +523,31 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
   void RepeatedPrimitiveFieldGenerator::GenerateSerializationCodeSource(io::Printer* printer) const {
     if (descriptor_->options().packed()) {
       printer->Print(variables_,
-        "if (self.$mutable_list_name$.count > 0) {\n"
+        "if (self.$name$.count > 0) {\n"
         "  [output writeRawVarint32:$tag$];\n"
         "  [output writeRawVarint32:$name$MemoizedSerializedSize];\n"
         "}\n");
 
       if (ReturnsPrimitiveType(descriptor_)) {
         printer->Print(variables_,
-          "for (NSNumber* _value in self.$mutable_list_name$) {\n"
+          "for (NSNumber* _value in self.$name$) {\n"
           "  [output write$capitalized_type$NoTag:$unboxed_value$];\n"
           "}\n");
       } else {
         printer->Print(variables_,
-          "for ($storage_type$ element in self.$mutable_list_name$) {\n"
+          "for ($storage_type$ element in self.$name$) {\n"
           "  [output write$capitalized_type$NoTag:element];\n"
           "}\n");
       }
     } else {
       if (ReturnsPrimitiveType(descriptor_)) {
         printer->Print(variables_,
-          "for (NSNumber* _value in self.$mutable_list_name$) {\n"
+          "for (NSNumber* _value in self.$name$) {\n"
           "  [output write$capitalized_type$:$number$ value:$unboxed_value$];\n"
           "}\n");
       } else {
         printer->Print(variables_,
-          "for ($storage_type$ element in self.$mutable_list_name$) {\n"
+          "for ($storage_type$ element in self.$name$) {\n"
           "  [output write$capitalized_type$:$number$ value:element];\n"
           "}\n");
       }
@@ -574,18 +562,18 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
     if (FixedSize(descriptor_->type()) == -1) {
       if (ReturnsPrimitiveType(descriptor_)) {
         printer->Print(variables_,
-          "for (NSNumber* _value in self.$mutable_list_name$) {\n"
+          "for (NSNumber* _value in self.$name$) {\n"
           "  dataSize += compute$capitalized_type$SizeNoTag($unboxed_value$);\n"
           "}\n");
       } else {
         printer->Print(variables_,
-          "for ($storage_type$ element in self.$mutable_list_name$) {\n"
+          "for ($storage_type$ element in self.$name$) {\n"
           "  dataSize += compute$capitalized_type$SizeNoTag(element);\n"
           "}\n");
       }
     } else {
       printer->Print(variables_,
-        "dataSize = $fixed_size$ * self.$mutable_list_name$.count;\n");
+        "dataSize = $fixed_size$ * self.$name$.count;\n");
     }
 
     printer->Print(
@@ -593,14 +581,14 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
 
     if (descriptor_->options().packed()) {
       printer->Print(variables_,
-        "if (self.$mutable_list_name$.count > 0) {\n"
+        "if (self.$name$.count > 0) {\n"
         "  size += $tag_size$;\n"
         "  size += computeInt32SizeNoTag(dataSize);\n"
         "}\n"
         "$name$MemoizedSerializedSize = dataSize;\n");
     } else {
       printer->Print(variables_,
-        "size += $tag_size$ * self.$mutable_list_name$.count;\n");
+        "size += $tag_size$ * self.$name$.count;\n");
     }
 
     printer->Outdent();
