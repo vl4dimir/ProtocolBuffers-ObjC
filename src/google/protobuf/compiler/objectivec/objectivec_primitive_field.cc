@@ -183,7 +183,7 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
     if (descriptor_->type() ==  FieldDescriptor::TYPE_BOOL) {
       printer->Print(variables_, "$storage_type$ $name$_:1;\n");
     } else {
-      printer->Print(variables_, "$storage_type$ $name$;\n");
+      printer->Print(variables_, "$storage_type$ $name$_;\n");
     }
   }
 
@@ -232,20 +232,20 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
     else if (IsReferenceType(GetObjectiveCType(descriptor_))) {
     	// This is a reference type, generate a "retain" setter
     	printer->Print(variables_,
-    	        "@synthesize $name$;\n"
+    	        "@synthesize $name$=$name$_;\n"
     	        "- (void) set$capitalized_name$:($storage_type$) _value {\n"
-    			"  if ($name$ == _value) return;\n"
-    			"  [$name$ autorelease];\n"
-    	        "  $name$ = [_value retain];\n"
+    			"  if ($name$_ == _value) return;\n"
+    			"  [$name$_ autorelease];\n"
+    	        "  $name$_ = [_value retain];\n"
     			"  self.has$capitalized_name$ = true;\n"
     	        "}\n");
     }
     else {
     	// This is a primitive value, generate an "assign" setter
 		printer->Print(variables_,
-				"@synthesize $name$;\n"
+				"@synthesize $name$=$name$_;\n"
 				"- (void) set$capitalized_name$:($storage_type$)_value {\n"
-				"  $name$ = _value;\n"
+				"  $name$_ = _value;\n"
 				"  self.has$capitalized_name$ = true;\n"
 				"}\n");
     }
@@ -409,7 +409,8 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
 
   void RepeatedPrimitiveFieldGenerator::GenerateMembersHeader(io::Printer* printer) const {
 	  printer->Print(variables_,
-	  			  "@property (nonatomic, retain) NSMutableArray* $name$;\n");
+	  			  "@property (nonatomic, retain) NSMutableArray* $name$;\n"
+	  			  "- ($storage_type$) $name$AtIndex:(int32_t) index;\n");
   }
 
   void RepeatedPrimitiveFieldGenerator::GenerateBuilderMembersHeader(io::Printer* printer) const {
@@ -445,7 +446,7 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
 
   void RepeatedPrimitiveFieldGenerator::GenerateMembersSource(io::Printer* printer) const {
     printer->Print(variables_,
-      "- (NSArray*) $name$ {\n"
+      "- (NSMutableArray*) $name$ {\n"
       "  return $name$;\n"
       "}\n"
       "- ($storage_type$) $name$AtIndex:(int32_t) index {\n"

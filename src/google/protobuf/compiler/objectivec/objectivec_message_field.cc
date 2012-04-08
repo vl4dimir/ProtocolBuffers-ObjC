@@ -88,7 +88,7 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
 
 
   void MessageFieldGenerator::GenerateFieldHeader(io::Printer* printer) const {
-    printer->Print(variables_, "$storage_type$ $name$;\n");
+    printer->Print(variables_, "$storage_type$ $name$_;\n");
   }
 
 
@@ -118,11 +118,11 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
 		"- (void) setHas$capitalized_name$:(BOOL) _value {\n"
 		"  has$capitalized_name$_ = !!_value;\n"
 		"}\n"
-		"@synthesize $name$;\n"
+		"@synthesize $name$=$name$_;\n"
 		"- (void) set$capitalized_name$:($storage_type$) _value {\n"
-		"  if ($name$ == _value) return;\n"
-		"  [$name$ autorelease];\n"
-		"  $name$ = [_value retain];\n"
+		"  if ($name$_ == _value) return;\n"
+		"  [$name$_ autorelease];\n"
+		"  $name$_ = [_value retain];\n"
 		"  self.has$capitalized_name$ = true;\n"
 		"}\n");
   }
