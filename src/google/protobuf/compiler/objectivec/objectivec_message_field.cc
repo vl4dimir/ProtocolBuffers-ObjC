@@ -123,7 +123,8 @@ namespace google { namespace protobuf { namespace compiler { namespace objective
 		"  if ($name$_ == _value) return;\n"
 		"  [$name$_ autorelease];\n"
 		"  $name$_ = [_value retain];\n"
-		"  self.has$capitalized_name$ = true;\n"
+		"  if (_value != nil) self.has$capitalized_name$ = true;\n"
+		"  else self.has$capitalized_name$ = false;\n"
 		"}\n");
   }
 
