@@ -70,21 +70,21 @@ string EnumValueName(const EnumValueDescriptor* descriptor);
 string SafeName(const string& name);
 
 enum ObjectiveCType {
-  OBJECTIVECTYPE_INT,
-  OBJECTIVECTYPE_LONG,
-  OBJECTIVECTYPE_FLOAT,
-  OBJECTIVECTYPE_DOUBLE,
-  OBJECTIVECTYPE_BOOLEAN,
-  OBJECTIVECTYPE_STRING,
-  OBJECTIVECTYPE_DATA,
-  OBJECTIVECTYPE_ENUM,
-  OBJECTIVECTYPE_MESSAGE
+	OBJECTIVECTYPE_INT,
+	OBJECTIVECTYPE_LONG,
+	OBJECTIVECTYPE_FLOAT,
+	OBJECTIVECTYPE_DOUBLE,
+	OBJECTIVECTYPE_BOOLEAN,
+	OBJECTIVECTYPE_STRING,
+	OBJECTIVECTYPE_DATA,
+	OBJECTIVECTYPE_ENUM,
+	OBJECTIVECTYPE_MESSAGE
 };
 
 ObjectiveCType GetObjectiveCType(FieldDescriptor::Type field_type);
 
 inline ObjectiveCType GetObjectiveCType(const FieldDescriptor* field) {
-  return GetObjectiveCType(field->type());
+	return GetObjectiveCType(field->type());
 }
 
 // Get the fully-qualified class name for a boxed primitive type, e.g.
@@ -101,8 +101,8 @@ bool ReturnsReferenceType(const FieldDescriptor* field);
 string DefaultValue(const FieldDescriptor* field);
 string BoxValue(const FieldDescriptor* field, const string& value);
 
-}  // namespace objectivec
-}  // namespace compiler
-}  // namespace protobuf
-}  // namespace google
+} // namespace objectivec
+} // namespace compiler
+} // namespace protobuf
+} // namespace google
 #endif  // GOOGLE_PROTOBUF_COMPILER_OBJECTIVEC_HELPERS_H__

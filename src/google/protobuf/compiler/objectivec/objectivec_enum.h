@@ -28,9 +28,10 @@
 
 namespace google {
 namespace protobuf {
-  namespace io {
-    class Printer;             // printer.h
-  }
+namespace io {
+class Printer;
+// printer.h
+}
 }
 
 namespace protobuf {
@@ -38,28 +39,28 @@ namespace compiler {
 namespace objectivec {
 
 class EnumGenerator {
- public:
-  explicit EnumGenerator(const EnumDescriptor* descriptor);
-  ~EnumGenerator();
+public:
+	explicit EnumGenerator(const EnumDescriptor* descriptor);
+	~EnumGenerator();
 
-  void GenerateHeader(io::Printer* printer);
-  void GenerateSource(io::Printer* printer);
+	void GenerateHeader(io::Printer* printer);
+	void GenerateSource(io::Printer* printer);
 
- private:
-  const EnumDescriptor* descriptor_;
-  vector<const EnumValueDescriptor*> canonical_values_;
+private:
+	const EnumDescriptor* descriptor_;
+	vector<const EnumValueDescriptor*> canonical_values_;
 
-  struct Alias {
-    const EnumValueDescriptor* value;
-    const EnumValueDescriptor* canonical_value;
-  };
-  vector<Alias> aliases_;
+	struct Alias {
+		const EnumValueDescriptor* value;
+		const EnumValueDescriptor* canonical_value;
+	};
+	vector<Alias> aliases_;
 
-  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(EnumGenerator);
+	GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(EnumGenerator);
 };
 
-}  // namespace objectivec
-}  // namespace compiler
-}  // namespace protobuf
-}  // namespace google
+} // namespace objectivec
+} // namespace compiler
+} // namespace protobuf
+} // namespace google
 #endif  // GOOGLE_PROTOBUF_COMPILER_OBJECTIVEC_ENUM_H__

@@ -30,83 +30,83 @@ namespace protobuf {
 namespace compiler {
 namespace objectivec {
 
-class PrimitiveFieldGenerator : public FieldGenerator {
- public:
-  explicit PrimitiveFieldGenerator(const FieldDescriptor* descriptor);
-  ~PrimitiveFieldGenerator();
+class PrimitiveFieldGenerator: public FieldGenerator {
+public:
+	explicit PrimitiveFieldGenerator(const FieldDescriptor* descriptor);
+	~PrimitiveFieldGenerator();
 
-  void GenerateHasFieldHeader(io::Printer* printer) const;
-  void GenerateFieldHeader(io::Printer* printer) const;
-  void GenerateHasPropertyHeader(io::Printer* printer) const;
-  void GeneratePropertyHeader(io::Printer* printer) const;
-  void GenerateMembersHeader(io::Printer* printer) const;
-  void GenerateBuilderMembersHeader(io::Printer* printer) const;
-  void GenerateMergingCodeHeader(io::Printer* printer) const;
-  void GenerateBuildingCodeHeader(io::Printer* printer) const;
-  void GenerateParsingCodeHeader(io::Printer* printer) const;
-  void GenerateSerializationCodeHeader(io::Printer* printer) const;
-  void GenerateSerializedSizeCodeHeader(io::Printer* printer) const;
-  
-  void GenerateExtensionSource(io::Printer* printer) const;
-  void GenerateSynthesizeSource(io::Printer* printer) const;
-  void GenerateDeallocSource(io::Printer* printer) const;
-  void GenerateInitializationSource(io::Printer* printer) const;
-  void GenerateMembersSource(io::Printer* printer) const;
-  void GenerateBuilderMembersSource(io::Printer* printer) const;
-  void GenerateMergingCodeSource(io::Printer* printer) const;
-  void GenerateBuildingCodeSource(io::Printer* printer) const;
-  void GenerateParsingCodeSource(io::Printer* printer) const;
-  void GenerateSerializationCodeSource(io::Printer* printer) const;
-  void GenerateSerializedSizeCodeSource(io::Printer* printer) const;
+	void GenerateHasFieldHeader(io::Printer* printer) const;
+	void GenerateFieldHeader(io::Printer* printer) const;
+	void GenerateHasPropertyHeader(io::Printer* printer) const;
+	void GeneratePropertyHeader(io::Printer* printer) const;
+	void GenerateMembersHeader(io::Printer* printer) const;
+	void GenerateBuilderMembersHeader(io::Printer* printer) const;
+	void GenerateMergingCodeHeader(io::Printer* printer) const;
+	void GenerateBuildingCodeHeader(io::Printer* printer) const;
+	void GenerateParsingCodeHeader(io::Printer* printer) const;
+	void GenerateSerializationCodeHeader(io::Printer* printer) const;
+	void GenerateSerializedSizeCodeHeader(io::Printer* printer) const;
 
-  string GetBoxedType() const;
+	void GenerateExtensionSource(io::Printer* printer) const;
+	void GenerateSynthesizeSource(io::Printer* printer) const;
+	void GenerateDeallocSource(io::Printer* printer) const;
+	void GenerateInitializationSource(io::Printer* printer) const;
+	void GenerateMembersSource(io::Printer* printer) const;
+	void GenerateBuilderMembersSource(io::Printer* printer) const;
+	void GenerateMergingCodeSource(io::Printer* printer) const;
+	void GenerateBuildingCodeSource(io::Printer* printer) const;
+	void GenerateParsingCodeSource(io::Printer* printer) const;
+	void GenerateSerializationCodeSource(io::Printer* printer) const;
+	void GenerateSerializedSizeCodeSource(io::Printer* printer) const;
 
- private:
-  const FieldDescriptor* descriptor_;
-  map<string, string> variables_;
+	string GetBoxedType() const;
 
-  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(PrimitiveFieldGenerator);
+private:
+	const FieldDescriptor* descriptor_;
+	map<string, string> variables_;
+
+	GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(PrimitiveFieldGenerator);
 };
 
-class RepeatedPrimitiveFieldGenerator : public FieldGenerator {
- public:
-  explicit RepeatedPrimitiveFieldGenerator(const FieldDescriptor* descriptor);
-  ~RepeatedPrimitiveFieldGenerator();
+class RepeatedPrimitiveFieldGenerator: public FieldGenerator {
+public:
+	explicit RepeatedPrimitiveFieldGenerator(const FieldDescriptor* descriptor);
+	~RepeatedPrimitiveFieldGenerator();
 
-  void GenerateHasFieldHeader(io::Printer* printer) const;
-  void GenerateFieldHeader(io::Printer* printer) const;
-  void GenerateHasPropertyHeader(io::Printer* printer) const;
-  void GeneratePropertyHeader(io::Printer* printer) const;
-  void GenerateMembersHeader(io::Printer* printer) const;
-  void GenerateBuilderMembersHeader(io::Printer* printer) const;
-  void GenerateMergingCodeHeader(io::Printer* printer) const;
-  void GenerateBuildingCodeHeader(io::Printer* printer) const;
-  void GenerateParsingCodeHeader(io::Printer* printer) const;
-  void GenerateSerializationCodeHeader(io::Printer* printer) const;
-  void GenerateSerializedSizeCodeHeader(io::Printer* printer) const;
+	void GenerateHasFieldHeader(io::Printer* printer) const;
+	void GenerateFieldHeader(io::Printer* printer) const;
+	void GenerateHasPropertyHeader(io::Printer* printer) const;
+	void GeneratePropertyHeader(io::Printer* printer) const;
+	void GenerateMembersHeader(io::Printer* printer) const;
+	void GenerateBuilderMembersHeader(io::Printer* printer) const;
+	void GenerateMergingCodeHeader(io::Printer* printer) const;
+	void GenerateBuildingCodeHeader(io::Printer* printer) const;
+	void GenerateParsingCodeHeader(io::Printer* printer) const;
+	void GenerateSerializationCodeHeader(io::Printer* printer) const;
+	void GenerateSerializedSizeCodeHeader(io::Printer* printer) const;
 
-  void GenerateExtensionSource(io::Printer* printer) const;
-  void GenerateSynthesizeSource(io::Printer* printer) const;
-  void GenerateDeallocSource(io::Printer* printer) const;
-  void GenerateInitializationSource(io::Printer* printer) const;
-  void GenerateMembersSource(io::Printer* printer) const;
-  void GenerateBuilderMembersSource(io::Printer* printer) const;
-  void GenerateMergingCodeSource(io::Printer* printer) const;
-  void GenerateBuildingCodeSource(io::Printer* printer) const;
-  void GenerateParsingCodeSource(io::Printer* printer) const;
-  void GenerateSerializationCodeSource(io::Printer* printer) const;
-  void GenerateSerializedSizeCodeSource(io::Printer* printer) const;
+	void GenerateExtensionSource(io::Printer* printer) const;
+	void GenerateSynthesizeSource(io::Printer* printer) const;
+	void GenerateDeallocSource(io::Printer* printer) const;
+	void GenerateInitializationSource(io::Printer* printer) const;
+	void GenerateMembersSource(io::Printer* printer) const;
+	void GenerateBuilderMembersSource(io::Printer* printer) const;
+	void GenerateMergingCodeSource(io::Printer* printer) const;
+	void GenerateBuildingCodeSource(io::Printer* printer) const;
+	void GenerateParsingCodeSource(io::Printer* printer) const;
+	void GenerateSerializationCodeSource(io::Printer* printer) const;
+	void GenerateSerializedSizeCodeSource(io::Printer* printer) const;
 
-  string GetBoxedType() const;
+	string GetBoxedType() const;
 
- private:
-  const FieldDescriptor* descriptor_;
-  map<string, string> variables_;
+private:
+	const FieldDescriptor* descriptor_;
+	map<string, string> variables_;
 
-  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(RepeatedPrimitiveFieldGenerator);
+	GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(RepeatedPrimitiveFieldGenerator);
 };
-}  // namespace objectivec
-}  // namespace compiler
-}  // namespace protobuf
-}  // namespace google
+} // namespace objectivec
+} // namespace compiler
+} // namespace protobuf
+} // namespace google
 #endif  // GOOGLE_PROTOBUF_COMPILER_OBJECTIVEC_PRIMITIVE_FIELD_H__

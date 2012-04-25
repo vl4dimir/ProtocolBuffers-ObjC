@@ -31,21 +31,19 @@ namespace protobuf {
 namespace compiler {
 namespace objectivec {
 
-class LIBPROTOC_EXPORT ObjectiveCGenerator : public CodeGenerator {
- public:
-  ObjectiveCGenerator();
-  ~ObjectiveCGenerator();
+class LIBPROTOC_EXPORT ObjectiveCGenerator: public CodeGenerator {
+public:
+	ObjectiveCGenerator();
+	~ObjectiveCGenerator();
 
-  bool Generate(const FileDescriptor* file,
-                const string& parameter,
-                OutputDirectory* output_directory,
-                string* error) const;
+	bool Generate(const FileDescriptor* file, const string& parameter,
+			OutputDirectory* output_directory, string* error) const;
 
- private:
-  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(ObjectiveCGenerator);
+private:
+	GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(ObjectiveCGenerator);
 };
-}  // namespace objectivec
-}  // namespace compiler
-}  // namespace protobuf
-}  // namespace google
+} // namespace objectivec
+} // namespace compiler
+} // namespace protobuf
+} // namespace google
 #endif  // GOOGLE_PROTOBUF_COMPILER_OBJECTIVEC_GENERATOR_H__

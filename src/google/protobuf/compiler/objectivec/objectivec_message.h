@@ -28,9 +28,10 @@
 
 namespace google {
 namespace protobuf {
-  namespace io {
-    class Printer;             // printer.h
-  }
+namespace io {
+class Printer;
+// printer.h
+}
 }
 
 namespace protobuf {
@@ -38,52 +39,51 @@ namespace compiler {
 namespace objectivec {
 
 class MessageGenerator {
- public:
-  explicit MessageGenerator(const Descriptor* descriptor);
-  ~MessageGenerator();
+public:
+	explicit MessageGenerator(const Descriptor* descriptor);
+	~MessageGenerator();
 
-  void GenerateStaticVariablesHeader(io::Printer* printer);
-  void GenerateStaticVariablesInitialization(io::Printer* printer);
-  void GenerateStaticVariablesSource(io::Printer* printer);
-  void GenerateEnumHeader(io::Printer* printer);
-  void GenerateMessageHeader(io::Printer* printer);
-  void GenerateSource(io::Printer* printer);
-  void GenerateExtensionRegistrationSource(io::Printer* printer);
-  void DetermineDependencies(set<string>* dependencies);
+	void GenerateStaticVariablesHeader(io::Printer* printer);
+	void GenerateStaticVariablesInitialization(io::Printer* printer);
+	void GenerateStaticVariablesSource(io::Printer* printer);
+	void GenerateEnumHeader(io::Printer* printer);
+	void GenerateMessageHeader(io::Printer* printer);
+	void GenerateSource(io::Printer* printer);
+	void GenerateExtensionRegistrationSource(io::Printer* printer);
+	void DetermineDependencies(set<string>* dependencies);
 
- private:
-  void GenerateMessageSerializationMethodsHeader(io::Printer* printer);
-  void GenerateParseFromMethodsHeader(io::Printer* printer);
-  void GenerateSerializeOneFieldHeader(io::Printer* printer,
-                                 const FieldDescriptor* field);
-  void GenerateSerializeOneExtensionRangeHeader(
-      io::Printer* printer, const Descriptor::ExtensionRange* range);
+private:
+	void GenerateMessageSerializationMethodsHeader(io::Printer* printer);
+	void GenerateParseFromMethodsHeader(io::Printer* printer);
+	void GenerateSerializeOneFieldHeader(io::Printer* printer,
+			const FieldDescriptor* field);
+	void GenerateSerializeOneExtensionRangeHeader(io::Printer* printer,
+			const Descriptor::ExtensionRange* range);
 
-  void GenerateBuilderHeader(io::Printer* printer);
-  void GenerateCommonBuilderMethodsHeader(io::Printer* printer);
-  void GenerateBuilderParsingMethodsHeader(io::Printer* printer);
-  void GenerateIsInitializedHeader(io::Printer* printer);
+	void GenerateBuilderHeader(io::Printer* printer);
+	void GenerateCommonBuilderMethodsHeader(io::Printer* printer);
+	void GenerateBuilderParsingMethodsHeader(io::Printer* printer);
+	void GenerateIsInitializedHeader(io::Printer* printer);
 
+	void GenerateMessageSerializationMethodsSource(io::Printer* printer);
+	void GenerateParseFromMethodsSource(io::Printer* printer);
+	void GenerateSerializeOneFieldSource(io::Printer* printer,
+			const FieldDescriptor* field);
+	void GenerateSerializeOneExtensionRangeSource(io::Printer* printer,
+			const Descriptor::ExtensionRange* range);
 
-  void GenerateMessageSerializationMethodsSource(io::Printer* printer);
-  void GenerateParseFromMethodsSource(io::Printer* printer);
-  void GenerateSerializeOneFieldSource(io::Printer* printer,
-                                 const FieldDescriptor* field);
-  void GenerateSerializeOneExtensionRangeSource(
-      io::Printer* printer, const Descriptor::ExtensionRange* range);
+	void GenerateBuilderSource(io::Printer* printer);
+	void GenerateCommonBuilderMethodsSource(io::Printer* printer);
+	void GenerateBuilderParsingMethodsSource(io::Printer* printer);
+	void GenerateIsInitializedSource(io::Printer* printer);
 
-  void GenerateBuilderSource(io::Printer* printer);
-  void GenerateCommonBuilderMethodsSource(io::Printer* printer);
-  void GenerateBuilderParsingMethodsSource(io::Printer* printer);
-  void GenerateIsInitializedSource(io::Printer* printer);
+	const Descriptor* descriptor_;
+	FieldGeneratorMap field_generators_;
 
-  const Descriptor* descriptor_;
-  FieldGeneratorMap field_generators_;
-
-  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(MessageGenerator);
+	GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(MessageGenerator);
 };
-}  // namespace objectivec
-}  // namespace compiler
-}  // namespace protobuf
-}  // namespace google
+} // namespace objectivec
+} // namespace compiler
+} // namespace protobuf
+} // namespace google
 #endif  // GOOGLE_PROTOBUF_COMPILER_OBJECTIVEC_MESSAGE_H__
