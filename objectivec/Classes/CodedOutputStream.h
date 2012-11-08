@@ -138,9 +138,6 @@ int32_t computeEnumSize(int32_t fieldNumber, int32_t value);
 
 - (void) writeTag:(int32_t) fieldNumber format:(int32_t) format;
 
-- (void) writeRawLittleEndian32:(int32_t) value;
-- (void) writeRawLittleEndian64:(int64_t) value;
-
 /**
  * Encode and write a varint.  {@code value} is treated as
  * unsigned, so it won't be sign-extended if negative.
