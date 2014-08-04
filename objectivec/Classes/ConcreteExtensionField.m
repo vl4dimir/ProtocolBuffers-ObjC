@@ -149,6 +149,8 @@ int32_t typeSize(PBExtensionType type) {
     case PBExtensionTypeSFixed64:
     case PBExtensionTypeDouble:
       return 8;
+    default:
+          break;
   }
 
   @throw [NSException exceptionWithName:@"InternalError" reason:@"" userInfo:nil];
@@ -348,7 +350,7 @@ int32_t typeSize(PBExtensionType type) {
     [output writeTag:fieldNumber format:PBWireFormatLengthDelimited];
     int32_t dataSize = 0;
     if (typeIsFixedSize(type)) {
-      dataSize = values.count * typeSize(type);
+      dataSize = (int32_t)values.count * typeSize(type);
     } else {
       for (id value in values) {
         dataSize += [self computeSingleSerializedSizeNoTag:value];
@@ -379,7 +381,7 @@ int32_t typeSize(PBExtensionType type) {
   if (isPacked) {
     int32_t size = 0;
     if (typeIsFixedSize(type)) {
-      size = values.count * typeSize(type);
+      size = (int32_t)values.count * typeSize(type);
     } else {
       for (id value in values) {
         size += [self computeSingleSerializedSizeNoTag:value];
@@ -490,14 +492,14 @@ int32_t typeSize(PBExtensionType type) {
     case PBExtensionTypeEnum:     return [NSNumber numberWithInt:[input readEnum]];
     case PBExtensionTypeGroup:
     {
-      id<PBMessage_Builder> builder = [messageOrGroupClass builder];
+      id<PBMessage_Builder> builder = (id)[messageOrGroupClass builder];
       [input readGroup:fieldNumber builder:builder extensionRegistry:extensionRegistry];
       return [builder build];
     }
 
     case PBExtensionTypeMessage:
     {
-      id<PBMessage_Builder> builder = [messageOrGroupClass builder];
+      id<PBMessage_Builder> builder = (id)[messageOrGroupClass builder];
       [input readMessage:builder extensionRegistry:extensionRegistry];
       return [builder build];
     }

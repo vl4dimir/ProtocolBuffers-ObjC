@@ -70,7 +70,7 @@ int64_t convertUInt32ToInt32(uint32_t v) {
 
 
 int32_t logicalRightShift32(int32_t value, int32_t spaces) {
-  return convertUInt32ToInt32((convertInt32ToUInt32(value) >> spaces));
+  return (int32_t)convertUInt32ToInt32((convertInt32ToUInt32(value) >> spaces));
 }
 
 
