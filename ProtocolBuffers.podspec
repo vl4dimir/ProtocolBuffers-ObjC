@@ -9,6 +9,6 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '6.0'
   s.source_files = 'objectivec/Classes/*.{h,m}'
   s.requires_arc = false
-  s.spec.exclude_files     = 'objectivec/Classes/Main.m'
+  s.exclude_files     = 'objectivec/Classes/Main.m'
   s.prefix_header_contents = '#import "Bootstrap.h"'
 end
