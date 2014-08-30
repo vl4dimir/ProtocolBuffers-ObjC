@@ -188,7 +188,7 @@ const int32_t LITTLE_ENDIAN_64_SIZE = 8;
 
 - (void) writeStringNoTag:(NSString*) value {
   NSData* data = [value dataUsingEncoding:NSUTF8StringEncoding];
-  [self writeRawVarint32:data.length];
+  [self writeRawVarint32:(int32_t)data.length];
   [self writeRawData:data];
 }
 
@@ -249,7 +249,7 @@ const int32_t LITTLE_ENDIAN_64_SIZE = 8;
 
 
 - (void) writeDataNoTag:(NSData*) value {
-  [self writeRawVarint32:value.length];
+  [self writeRawVarint32:(int32_t)value.length];
   [self writeRawData:value];
 }
 
@@ -451,7 +451,7 @@ int32_t computeBoolSizeNoTag(BOOL value) {
  */
 int32_t computeStringSizeNoTag(NSString* value) {
   NSData* data = [value dataUsingEncoding:NSUTF8StringEncoding];
-  return computeRawVarint32Size(data.length) + data.length;
+  return computeRawVarint32Size((int32_t)data.length) + (int32_t)data.length;
 }
 
 
@@ -489,7 +489,7 @@ int32_t computeMessageSizeNoTag(id<PBMessage> value) {
  * {@code bytes} field, including tag.
  */
 int32_t computeDataSizeNoTag(NSData* value) {
-  return computeRawVarint32Size(value.length) + value.length;
+  return computeRawVarint32Size((int32_t)value.length) + (int32_t)value.length;
 }
 
 
@@ -780,7 +780,7 @@ int32_t computeRawMessageSetExtensionSize(int32_t fieldNumber, NSData* value) {
  */
 - (int32_t) spaceLeft {
   if (output == nil) {
-    return buffer.length - position;
+    return (int32_t)(buffer.length - position);
   } else {
     @throw [NSException exceptionWithName:@"UnsupportedOperation"
                                    reason:@"spaceLeft() can only be called on CodedOutputStreams that are writing to a flat array."
@@ -815,7 +815,7 @@ int32_t computeRawMessageSetExtensionSize(int32_t fieldNumber, NSData* value) {
 
 /** Write an array of bytes. */
 - (void) writeRawData:(NSData*) data {
-  [self writeRawData:data offset:0 length:data.length];
+  [self writeRawData:data offset:0 length:(int32_t)data.length];
 }
 
 
@@ -826,11 +826,11 @@ int32_t computeRawMessageSetExtensionSize(int32_t fieldNumber, NSData* value) {
     position += length;
   } else {
     // Write extends past current buffer.  Fill the rest of this buffer and flush.
-    int32_t bytesWritten = buffer.length - position;
+    int32_t bytesWritten = (int32_t)(buffer.length - position);
     memcpy(((uint8_t*)buffer.mutableBytes) + position, ((uint8_t*)value.bytes) + offset, bytesWritten);
     offset += bytesWritten;
     length -= bytesWritten;
-    position = buffer.length;
+    position = (int32_t)buffer.length;
     [self refreshBuffer];
 
     // Now deal with the rest.
